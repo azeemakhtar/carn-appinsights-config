@@ -1,0 +1,46 @@
+trigger:
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - Carnegie.ApplicationInsights.Common/*
+      - Carnegie.ApplicationInsights.AspNetCore/*
+
+variables:
+  projectFolder: 'Carnegie.ApplicationInsights.AspNetCore'
+  project: '$(projectFolder)/**.csproj'
+  buildConfiguration: 'Release'
+
+pool: 'tfssetup'
+
+steps:
+- task: DotNetCoreCLI@2
+  displayName: 'Nuget restore...'
+  inputs:
+    command: 'restore'
+    projects: '$(project)'
+    feedsToUse: 'select'
+    vstsFeed: 'd2ddfc16-5988-4c23-966e-3127e0b2d886'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Build...'
+  inputs:
+    command: 'build'
+    projects: '$(project)'
+    arguments: '-c $(buildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Pack...'
+  inputs:
+    command: 'pack'
+    packagesToPack: '$(project)'
+    versioningScheme: 'off'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Nuget push...'
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+    nuGetFeedType: 'internal'
+    publishVstsFeed: '/d2ddfc16-5988-4c23-966e-3127e0b2d886'
