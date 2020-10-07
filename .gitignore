@@ -1,0 +1,13 @@
+[Dd]ebug/
+[Rr]elease/
+[Bb]in/
+[Oo]bj/
+[Ll]ogs/
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+
+/Visual Studio 2019/Visualizers/attribcache140.bin
