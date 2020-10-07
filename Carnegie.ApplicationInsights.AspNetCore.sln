@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carnegie.ApplicationInsights.AspNetCore", "Carnegie.ApplicationInsights\Carnegie.ApplicationInsights.AspNetCore.csproj", "{4B38F447-8257-43E2-A001-0ACBCC5E4D9B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carnegie.ApplicationInsights.AspNetCore", "Carnegie.ApplicationInsights.AspNetCore\Carnegie.ApplicationInsights.AspNetCore.csproj", "{4B38F447-8257-43E2-A001-0ACBCC5E4D9B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carnegie.ApplicationInsights.Common", "Carnegie.ApplicationInsights.Common\Carnegie.ApplicationInsights.Common.csproj", "{401E8F08-4C71-4719-916B-17D2CB2E7D12}"
 EndProject
