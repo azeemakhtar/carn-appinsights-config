@@ -10,12 +10,14 @@ namespace Carnegie.ApplicationInsights.Worker
     {
         /// <summary>
         /// Enable Application insights and return the applied instrumentation key.
+        /// NB: Call this after 'services.AddHostedService()'.
         /// </summary>
         /// <param name="services"></param>
         /// <param name="instrumentationKey"></param>
         /// <param name="environmentName"></param>
+        /// <param name="adaptiveSampling"></param>
         /// <returns>The applied instrumentation key, or null if not enabled.</returns>
-        public static string AddCarnegieApplicationInsightsWorker(this IServiceCollection services, string instrumentationKey = null, string environmentName = null)
+        public static string AddCarnegieApplicationInsightsWorker(this IServiceCollection services, string instrumentationKey = null, string environmentName = null, bool adaptiveSampling = false)
         {
             if (string.IsNullOrEmpty(instrumentationKey) && string.IsNullOrEmpty(environmentName))
             {
@@ -32,7 +34,11 @@ namespace Carnegie.ApplicationInsights.Worker
 
             services
                 .AddApplicationInsightsTelemetryWorkerService(
-                    new ApplicationInsightsServiceOptions { InstrumentationKey = key })
+                    new ApplicationInsightsServiceOptions
+                    {
+                        InstrumentationKey = key,
+                        EnableAdaptiveSampling = adaptiveSampling
+                    })
                 .EnableSqlLogging()
                 .EnableApplicationRoles();
 

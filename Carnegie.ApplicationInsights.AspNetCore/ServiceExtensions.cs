@@ -14,8 +14,9 @@ namespace Carnegie.ApplicationInsights.AspNetCore
         /// <param name="services"></param>
         /// <param name="instrumentationKey"></param>
         /// <param name="environmentName"></param>
+        /// <param name="adaptiveSampling"></param>
         /// <returns>The applied instrumentation key, or null if not enabled.</returns>
-        public static string AddCarnegieApplicationInsightsAspNetCore(this IServiceCollection services, string instrumentationKey = null, string environmentName = null)
+        public static string AddCarnegieApplicationInsightsAspNetCore(this IServiceCollection services, string instrumentationKey = null, string environmentName = null, bool adaptiveSampling = false)
         {
             if (string.IsNullOrEmpty(instrumentationKey) && string.IsNullOrEmpty(environmentName))
             {
@@ -32,7 +33,11 @@ namespace Carnegie.ApplicationInsights.AspNetCore
 
             services
                 .AddApplicationInsightsTelemetry(
-                    new ApplicationInsightsServiceOptions { InstrumentationKey = key })
+                    new ApplicationInsightsServiceOptions
+                    {
+                        InstrumentationKey = key,
+                        EnableAdaptiveSampling = adaptiveSampling
+                    })
                 .EnableSqlLogging()
                 .EnableApplicationRoles();
 
