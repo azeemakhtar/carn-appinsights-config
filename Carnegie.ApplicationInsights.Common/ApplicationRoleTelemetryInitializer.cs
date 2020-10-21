@@ -10,6 +10,15 @@ namespace Carnegie.ApplicationInsights.Common
         private string _roleName;
         private string _instanceName;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roleName">Overrides the role name. The default is the assembly name.</param>
+        public ApplicationRoleTelemetryInitializer(string roleName = null)
+        {
+            _roleName = roleName;
+        }
+
         public void Initialize(ITelemetry telemetry)
         {
             if (string.IsNullOrEmpty(telemetry.Context.Cloud.RoleName))

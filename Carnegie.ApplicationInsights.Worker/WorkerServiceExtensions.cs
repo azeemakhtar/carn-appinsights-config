@@ -16,8 +16,11 @@ namespace Carnegie.ApplicationInsights.Worker
         /// <param name="instrumentationKey"></param>
         /// <param name="environmentName"></param>
         /// <param name="adaptiveSampling"></param>
+        /// <param name="roleName">Overrides the role name. The default is the assembly name.</param>
         /// <returns>The applied instrumentation key, or null if not enabled.</returns>
-        public static string AddCarnegieApplicationInsightsWorker(this IServiceCollection services, string instrumentationKey = null, string environmentName = null, bool adaptiveSampling = false)
+        public static string AddCarnegieApplicationInsightsWorker(this IServiceCollection services,
+            string instrumentationKey = null, string environmentName = null, bool adaptiveSampling = false,
+            string roleName = null)
         {
             if (string.IsNullOrEmpty(instrumentationKey) && string.IsNullOrEmpty(environmentName))
             {
@@ -40,7 +43,7 @@ namespace Carnegie.ApplicationInsights.Worker
                         EnableAdaptiveSampling = adaptiveSampling
                     })
                 .EnableSqlLogging()
-                .EnableApplicationRoles();
+                .EnableApplicationRoles(roleName);
 
             return key;
         }

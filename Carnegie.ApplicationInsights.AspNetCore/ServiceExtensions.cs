@@ -15,15 +15,18 @@ namespace Carnegie.ApplicationInsights.AspNetCore
         /// <param name="instrumentationKey"></param>
         /// <param name="environmentName"></param>
         /// <param name="adaptiveSampling"></param>
+        /// <param name="roleName">Overrides the role name. The default is the assembly name.</param>
         /// <returns>The applied instrumentation key, or null if not enabled.</returns>
-        public static string AddCarnegieApplicationInsightsAspNetCore(this IServiceCollection services, string instrumentationKey = null, string environmentName = null, bool adaptiveSampling = false)
+        public static string AddCarnegieApplicationInsightsAspNetCore(this IServiceCollection services,
+            string instrumentationKey = null, string environmentName = null, bool adaptiveSampling = false,
+            string roleName = null)
         {
             if (string.IsNullOrEmpty(instrumentationKey) && string.IsNullOrEmpty(environmentName))
             {
                 Trace.TraceWarning("No instrumentation key configured. Application Insights not enabled.");
                 return null;
             }
-            
+
             var key = instrumentationKey ?? InstrumentationKeyManager.GetInstrumentationKey(environmentName);
             if (string.IsNullOrEmpty(key))
             {
@@ -39,7 +42,7 @@ namespace Carnegie.ApplicationInsights.AspNetCore
                         EnableAdaptiveSampling = adaptiveSampling
                     })
                 .EnableSqlLogging()
-                .EnableApplicationRoles();
+                .EnableApplicationRoles(roleName);
 
             return key;
         }
