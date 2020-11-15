@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Version>1.2.3-alpha</Version>
+    <Description>Serilog sink for Application Insights.</Description>
+    <Company>Carnegie</Company>
+    <Authors>Carnegie</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Serilog.Sinks.ApplicationInsights" Version="3.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Carnegie.ApplicationInsights.Common\Carnegie.ApplicationInsights.Common.csproj" />
+  </ItemGroup>
+
+</Project>
