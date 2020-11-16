@@ -2,6 +2,7 @@
 using Carnegie.ApplicationInsights.Common;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using Microsoft.ApplicationInsights.DependencyCollector;
+using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Carnegie.ApplicationInsights.AspNetCore
@@ -41,6 +42,7 @@ namespace Carnegie.ApplicationInsights.AspNetCore
                         InstrumentationKey = key,
                         EnableAdaptiveSampling = adaptiveSampling
                     })
+                .AddSingleton<ITelemetryInitializer, AuthenticatedUserIdTelemetryInitializer>()
                 .EnableSqlLogging()
                 .EnableApplicationRoles(roleName);
 
