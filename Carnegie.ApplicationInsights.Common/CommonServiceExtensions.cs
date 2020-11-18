@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Carnegie.ApplicationInsights.Common
 {
-    public static class ServiceExtensions
+    public static class CommonServiceExtensions
     {
         /// <summary>
         /// 

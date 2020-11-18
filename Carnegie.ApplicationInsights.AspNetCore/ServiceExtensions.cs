@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Carnegie.ApplicationInsights.AspNetCore.TelemetryInitializers;
 using Carnegie.ApplicationInsights.Common;
 using Carnegie.ApplicationInsights.Common.TelemetryInitializers;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
