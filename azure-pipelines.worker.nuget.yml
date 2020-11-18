@@ -36,8 +36,6 @@ steps:
     command: 'pack'
     packagesToPack: '$(project)'
     versioningScheme: 'off'
-    includesymbols: true
-    includesource: true
 
 - task: DotNetCoreCLI@2
   displayName: 'Nuget push...'

@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Carnegie.ApplicationInsights.Common;
+using Carnegie.ApplicationInsights.Common.TelemetryInitializers;
 using Microsoft.ApplicationInsights.Extensibility;
 using Serilog;
 using Serilog.Configuration;
@@ -31,7 +32,7 @@ namespace Carnegie.ApplicationInsights.Logging
             }
 
             var telemetryConfiguration = TelemetryConfiguration.CreateDefault();
-            telemetryConfiguration.InstrumentationKey = instrumentationKey;
+            telemetryConfiguration.InstrumentationKey = key;
             telemetryConfiguration.TelemetryInitializers.Add(new ApplicationRoleTelemetryInitializer());
 
             writeTo.ApplicationInsights(telemetryConfiguration, TelemetryConverter.Traces);

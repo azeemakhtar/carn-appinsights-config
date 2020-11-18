@@ -3,7 +3,7 @@ using System.Reflection;
 using Microsoft.ApplicationInsights.Channel;
 using Microsoft.ApplicationInsights.Extensibility;
 
-namespace Carnegie.ApplicationInsights.Common
+namespace Carnegie.ApplicationInsights.Common.TelemetryInitializers
 {
     public class ApplicationRoleTelemetryInitializer : ITelemetryInitializer
     {

@@ -1,4 +1,5 @@
-﻿using Microsoft.ApplicationInsights.Extensibility;
+﻿using Carnegie.ApplicationInsights.Common.TelemetryInitializers;
+using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Carnegie.ApplicationInsights.Common
