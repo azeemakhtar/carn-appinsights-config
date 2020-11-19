@@ -1,0 +1,70 @@
+﻿# Pipeline for building and pushing the Carnegie.ApplicationInsights.MassTransit nuget package.
+# The version number must be updated in the project file to avoid version conflicts in the "Nuget push" task.
+# YAML docs: https://aka.ms/yaml
+
+trigger:
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      # Variables not supported here (https://docs.microsoft.com/en-us/azure/devops/pipelines/repos/azure-repos-git?view=azure-devops&tabs=yaml#paths)
+      - Carnegie.ApplicationInsights.MassTransit/*
+
+variables:
+  projectFolder: 'Carnegie.ApplicationInsights.MassTransit'
+  project: '$(projectFolder)/**.csproj'
+  buildConfiguration: 'Release'
+  ${{ if ne( variables['Build.SourceBranchName'], 'master') }}: 
+    label: -$(Build.SourceBranchName) 
+  ${{ if eq( variables['Build.SourceBranchName'], 'master') }}: 
+    label: ''
+
+pool: 'tfssetup'
+
+steps:
+- powershell: |
+      $src = Resolve-Path "$(project)"
+      $xml=[xml](get-content $src)
+      $semanticVersion = "1.0.$(Build.BuildId)$(label)"
+      $versionNode = $xml.SelectSingleNode("/Project/PropertyGroup/Version")
+      if($versionNode) {
+          $version = $versionNode.InnerText
+          $majorMinor = $version.Substring(0, $version.lastIndexOf('.'))
+          $semanticVersion = "$majorMinor.$(Build.BuildId)$(label)"
+          $versionNode.InnerText = $semanticVersion
+          $xml.Save($src)
+      }
+      Write-Host "##vso[build.updatebuildnumber]$semanticVersion"
+  displayName: 'Set version and build number'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Restore...'
+  inputs:
+    command: 'restore'
+    feedsToUse: 'select'
+    projects: '$(project)'
+    vstsFeed: 'd2ddfc16-5988-4c23-966e-3127e0b2d886'
+    includeNuGetOrg: false
+
+- task: DotNetCoreCLI@2
+  displayName: 'Build...'
+  inputs:
+    command: 'build'
+    projects: '$(project)'
+    arguments: '-c $(buildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Pack...'
+  inputs:
+    command: 'pack'
+    packagesToPack: '$(project)'
+    versioningScheme: 'off'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Nuget push...'
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+    nuGetFeedType: 'internal'
+    publishVstsFeed: '/d2ddfc16-5988-4c23-966e-3127e0b2d886'
