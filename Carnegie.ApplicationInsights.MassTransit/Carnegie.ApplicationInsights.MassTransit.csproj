@@ -10,8 +10,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Carnegie.ServiceBus.AspNetCore" Version="1.0.36597-preview-1.0.0" />
-		<PackageReference Include="Microsoft.ApplicationInsights" Version="2.15.0" />
+		<PackageReference Include="Carnegie.ServiceBus.AspNetCore" Version="1.0.37151" />
+		<PackageReference Include="Microsoft.ApplicationInsights" Version="2.16.0" />
 	</ItemGroup>
 
 </Project>
