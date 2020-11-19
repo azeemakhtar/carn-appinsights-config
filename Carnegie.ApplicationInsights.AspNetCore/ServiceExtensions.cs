@@ -1,7 +1,10 @@
 ﻿using System.Diagnostics;
+using Carnegie.ApplicationInsights.AspNetCore.TelemetryInitializers;
 using Carnegie.ApplicationInsights.Common;
+using Carnegie.ApplicationInsights.Common.TelemetryInitializers;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using Microsoft.ApplicationInsights.DependencyCollector;
+using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Carnegie.ApplicationInsights.AspNetCore
@@ -14,15 +17,19 @@ namespace Carnegie.ApplicationInsights.AspNetCore
         /// <param name="services"></param>
         /// <param name="instrumentationKey"></param>
         /// <param name="environmentName"></param>
+        /// <param name="adaptiveSampling"></param>
+        /// <param name="roleName">Overrides the role name. The default is the assembly name.</param>
         /// <returns>The applied instrumentation key, or null if not enabled.</returns>
-        public static string AddCarnegieApplicationInsightsAspNetCore(this IServiceCollection services, string instrumentationKey = null, string environmentName = null)
+        public static string AddCarnegieApplicationInsightsAspNetCore(this IServiceCollection services,
+            string instrumentationKey = null, string environmentName = null, bool adaptiveSampling = false,
+            string roleName = null)
         {
             if (string.IsNullOrEmpty(instrumentationKey) && string.IsNullOrEmpty(environmentName))
             {
                 Trace.TraceWarning("No instrumentation key configured. Application Insights not enabled.");
                 return null;
             }
-            
+
             var key = instrumentationKey ?? InstrumentationKeyManager.GetInstrumentationKey(environmentName);
             if (string.IsNullOrEmpty(key))
             {
@@ -32,9 +39,14 @@ namespace Carnegie.ApplicationInsights.AspNetCore
 
             services
                 .AddApplicationInsightsTelemetry(
-                    new ApplicationInsightsServiceOptions { InstrumentationKey = key })
+                    new ApplicationInsightsServiceOptions
+                    {
+                        InstrumentationKey = key,
+                        EnableAdaptiveSampling = adaptiveSampling
+                    })
+                .AddSingleton<ITelemetryInitializer, AuthenticatedUserIdTelemetryInitializer>()
                 .EnableSqlLogging()
-                .EnableApplicationRoles();
+                .EnableApplicationRoles(roleName);
 
             return key;
         }
