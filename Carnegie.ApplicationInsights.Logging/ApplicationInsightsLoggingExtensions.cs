@@ -16,19 +16,19 @@ namespace Carnegie.ApplicationInsights.Logging
         /// <param name="writeTo"></param>
         /// <param name="instrumentationKey">The instrumentation key to write the events to. If null, then <paramref name="environmentName"/> should be set instead.</param>
         /// <param name="environmentName">The environment to use for instrumentation key lookup.</param>
-        public static void ApplicationInsightsSink(this LoggerSinkConfiguration writeTo, string instrumentationKey = null, string environmentName = null)
+        public static LoggerSinkConfiguration ApplicationInsightsSink(this LoggerSinkConfiguration writeTo, string instrumentationKey = null, string environmentName = null)
         {
             if (string.IsNullOrEmpty(instrumentationKey) && string.IsNullOrEmpty(environmentName))
             {
                 Trace.TraceWarning("No instrumentation key configured. Application Insights not enabled.");
-                return;
+                return writeTo;
             }
 
             var key = instrumentationKey ?? InstrumentationKeyManager.GetInstrumentationKey(environmentName);
             if (string.IsNullOrEmpty(key))
             {
                 Trace.TraceInformation($"Application Insights not enabled for environment: {environmentName}");
-                return;
+                return writeTo;
             }
 
             var telemetryConfiguration = TelemetryConfiguration.CreateDefault();
@@ -36,6 +36,8 @@ namespace Carnegie.ApplicationInsights.Logging
             telemetryConfiguration.TelemetryInitializers.Add(new ApplicationRoleTelemetryInitializer());
 
             writeTo.ApplicationInsights(telemetryConfiguration, TelemetryConverter.Traces);
+
+            return writeTo;
         }
     }
 }
