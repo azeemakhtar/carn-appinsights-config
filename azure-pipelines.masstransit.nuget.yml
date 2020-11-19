@@ -5,8 +5,7 @@
 trigger:
   branches:
     include:
-      - feature/preview-1.0.0
-	    - master
+      - master
   paths:
     include:
       # Variables not supported here (https://docs.microsoft.com/en-us/azure/devops/pipelines/repos/azure-repos-git?view=azure-devops&tabs=yaml#paths)
