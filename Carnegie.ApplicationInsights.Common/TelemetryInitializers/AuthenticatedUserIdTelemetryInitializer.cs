@@ -2,7 +2,7 @@
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Http;
 
-namespace Carnegie.ApplicationInsights.AspNetCore.TelemetryInitializers
+namespace Carnegie.ApplicationInsights.Common.TelemetryInitializers
 {
     /// <summary>
     /// Set the "Auth user id" field to the authenticated user from the Http context.
