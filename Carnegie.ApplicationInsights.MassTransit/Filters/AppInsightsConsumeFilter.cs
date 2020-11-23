@@ -17,7 +17,7 @@ namespace Carnegie.ApplicationInsights.MassTransit.Filters
 			_telemetryClient = telemetryClient;
 		}
 
-		public Task Send(ConsumeContext<T> context, IPipe<ConsumeContext<T>> next)
+		public async Task Send(ConsumeContext<T> context, IPipe<ConsumeContext<T>> next)
 		{
             var operationName = typeof(T).FullName;
             var requestTelemetry = new RequestTelemetry { Name = operationName };
@@ -34,11 +34,17 @@ namespace Carnegie.ApplicationInsights.MassTransit.Filters
 
             using var operation = _telemetryClient.StartOperation(requestTelemetry);
 
-			try
-			{
-				return next.Send(context);
-			}
-			finally
+            try
+            {
+                await next.Send(context);
+                operation.Telemetry.Success = true;
+            }
+            catch (Exception)
+            {
+                operation.Telemetry.Success = false;
+                throw;
+            }
+            finally
 			{
 				_telemetryClient.StopOperation(operation);
 			}
