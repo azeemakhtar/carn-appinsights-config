@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Carnegie.ApplicationInsights.Common;
 using Carnegie.ApplicationInsights.Common.TelemetryInitializers;
+using Carnegie.ApplicationInsights.Common.TelemetryProcessors;
 using Microsoft.ApplicationInsights.DependencyCollector;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.ApplicationInsights.WorkerService;
@@ -45,6 +46,7 @@ namespace Carnegie.ApplicationInsights.Worker
                         EnableAdaptiveSampling = adaptiveSampling
                     })
                 .AddSingleton<ITelemetryInitializer, AuthenticatedUserIdTelemetryInitializer>()
+                .AddApplicationInsightsTelemetryProcessor<SeqLogFilterProcessor>()
                 .EnableSqlLogging()
                 .EnableApplicationRoles(roleName);
 

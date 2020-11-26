@@ -1,20 +1,17 @@
 # Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+Contains helper methods for enabling and configuring Application Insights on Carnegie services and applications.
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+For more information on how to use Application Insights, see the [wiki page](https://dev.azure.com/carnegieinvestmentbank/CarnegieIT/_wiki/wikis/DefaultProject.wiki/221/Application-Insights).
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+## Project structure
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
-
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+* **Carnegie.ApplicationInsights.AspNetCore**
+  * Helpers for enabling and configuring Application Insights for services and other Asp .Net Core projects.
+* **Carnegie.ApplicationInsights.Common**
+  * Shared code such as telemetry filters and processors.
+* **Carnegie.ApplicationInsights.Logging**
+  * A wrapper for the Serilog sink for Application Insights.
+* **Carnegie.ApplicationInsights.MassTransit**
+  * Sets up correlation ids for MassTransit producers and consumers.
+* **Carnegie.ApplicationInsights.Worker**
+  * Helpers for enabling and configuring Application Insights for non-web processes such as event-processing workers.
