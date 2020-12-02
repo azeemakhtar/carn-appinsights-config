@@ -25,7 +25,7 @@ namespace Carnegie.ApplicationInsights.Common.TelemetryInitializers
             {
                 // Set role name to service or worker name so that events more easily can be associated to the correct components.
                 // Also necessary for the application map to work.
-                _roleName ??= (Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly()).GetName().Name;
+                _roleName ??= AssemblyHelper.GetRunningAssembly().GetName().Name;
                 telemetry.Context.Cloud.RoleName = _roleName;
 
                 // Explicitly set instance name to avoid mixing computer name ("TSSE109") and network names ("TSSE109.carnnet.com") in events.
