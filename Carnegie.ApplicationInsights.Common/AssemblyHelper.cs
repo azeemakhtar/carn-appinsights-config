@@ -11,6 +11,7 @@ namespace Carnegie.ApplicationInsights.Common
             return Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly();
         }
 
+        // Check if the assembly is a debug build, which most likely indicates a developer machine.
         public static bool IsDebugBuild(this Assembly assembly)
         {
             if (assembly == null)
@@ -20,5 +21,16 @@ namespace Carnegie.ApplicationInsights.Common
 
             return assembly.GetCustomAttribute<DebuggableAttribute>()?.IsJITTrackingEnabled ?? false;
         }
+
+        public static bool IsTestRunner(this Assembly assembly)
+        {
+            if (assembly == null)
+            {
+                throw new ArgumentNullException(nameof(assembly));
+            }
+
+            return assembly.GetName().Name == "ReSharperTestRunner64";  // We'll probably need to add more checks here
+        }
+
     }
 }

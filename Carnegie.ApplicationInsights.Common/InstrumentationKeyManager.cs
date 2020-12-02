@@ -6,12 +6,14 @@ namespace Carnegie.ApplicationInsights.Common
     {
         public static string GetInstrumentationKey(string environmentName)
         {
-            // Check if the calling assembly is a debug build, which most likely indicates a developer machine
-            if (AssemblyHelper.GetRunningAssembly().IsDebugBuild())
+            // If a developer machine or test runner is initializing, then don't log Application Insights events.
+            var runningAssembly = AssemblyHelper.GetRunningAssembly();
+            if (runningAssembly.IsDebugBuild() || runningAssembly.IsTestRunner())
             {
                 return EmptyKey();
             }
 
+            // Map environment name to default instrumentation key
             if (string.IsNullOrEmpty(environmentName))
             {
                 throw new ArgumentNullException(nameof(environmentName));
