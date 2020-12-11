@@ -29,7 +29,14 @@ namespace Carnegie.ApplicationInsights.Common
                 throw new ArgumentNullException(nameof(assembly));
             }
 
-            return assembly.GetName().Name == "ReSharperTestRunner64";  // We'll probably need to add more checks here
+            switch (assembly.GetName().Name)
+            {
+                case "ReSharperTestRunner64":
+                case "testhost": // The dotnet test runner, also used in Visual Studio
+                    return true;
+            }
+
+            return false;
         }
 
     }
