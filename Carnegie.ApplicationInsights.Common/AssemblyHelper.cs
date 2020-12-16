@@ -33,6 +33,7 @@ namespace Carnegie.ApplicationInsights.Common
             {
                 case "ReSharperTestRunner64":
                 case "testhost": // The dotnet test runner, also used in Visual Studio
+                case "testhost.x86":
                     return true;
             }
 
