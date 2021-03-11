@@ -24,8 +24,7 @@ namespace Carnegie.ApplicationInsights.Common
                 case "DEVELOPMENT":
                     return EmptyKey();
                 case "TEST":
-                    return "d518983e-6365-4eb6-91f8-d89c443b124a"; // Old
-                    //return "2c0b4ed7-0011-444d-97b6-3206a5da2953"; // New, we´ll switch when all developers have access
+                    return "2c0b4ed7-0011-444d-97b6-3206a5da2953";
                 case "TEST1":
                     return "5e758f1c-66ac-4fc7-a630-ea8e881b1986";
                 case "PREPROD":
