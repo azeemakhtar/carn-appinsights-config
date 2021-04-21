@@ -9,6 +9,7 @@ For more information on how to use Application Insights, see the [wiki page](htt
   * Helpers for enabling and configuring Application Insights for services and other Asp .Net Core projects.
 * **Carnegie.ApplicationInsights.Common**
   * Shared code such as telemetry filters and processors.
+  * Also contains `MonitoringHelper` that can be used for explicitly creating requests (useful for background services) and custom events.
 * **Carnegie.ApplicationInsights.Logging**
   * A wrapper for the Serilog sink for Application Insights.
 * **Carnegie.ApplicationInsights.MassTransit**
