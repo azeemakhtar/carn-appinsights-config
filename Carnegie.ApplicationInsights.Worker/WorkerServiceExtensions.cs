@@ -48,7 +48,8 @@ namespace Carnegie.ApplicationInsights.Worker
                 .AddSingleton<ITelemetryInitializer, AuthenticatedUserIdTelemetryInitializer>()
                 .AddApplicationInsightsTelemetryProcessor<SeqLogFilterProcessor>()
                 .EnableSqlLogging()
-                .EnableApplicationRoles(roleName);
+                .EnableApplicationRoles(roleName)
+                .AddSingleton<IMonitoringHelper, MonitoringHelper>();
 
             return key;
         }
