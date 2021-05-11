@@ -28,9 +28,8 @@ namespace Carnegie.ApplicationInsights.MassTransit.Filters
 
 			operation.Telemetry.Type = ApplicationInsightsConstants.TelemetryType;
 			operation.Telemetry.Data = "PUBLISH " + context.DestinationAddress;
-			
-            Console.WriteLine($"Publish message at {DateTime.Now}");
-			try
+
+            try
 			{
 				await next.Send(context);
 				operation.Telemetry.Success = true;
