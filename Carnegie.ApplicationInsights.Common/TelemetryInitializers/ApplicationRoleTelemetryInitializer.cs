@@ -4,6 +4,9 @@ using Microsoft.ApplicationInsights.Extensibility;
 
 namespace Carnegie.ApplicationInsights.Common.TelemetryInitializers
 {
+    /// <summary>
+    /// Sets the cloud_RoleName property on requests.
+    /// </summary>
     public class ApplicationRoleTelemetryInitializer : ITelemetryInitializer
     {
         private string _roleName;

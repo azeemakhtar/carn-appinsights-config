@@ -46,6 +46,7 @@ namespace Carnegie.ApplicationInsights.Worker
                         EnableAdaptiveSampling = adaptiveSampling
                     })
                 .AddSingleton<ITelemetryInitializer, AuthenticatedUserIdTelemetryInitializer>()
+                .AddSingleton<ITelemetryInitializer, SoapActionHeaderTelemetryInitializer>()
                 .AddApplicationInsightsTelemetryProcessor<SeqLogFilterProcessor>()
                 .EnableSqlLogging()
                 .EnableApplicationRoles(roleName)
