@@ -27,7 +27,8 @@ namespace Carnegie.ApplicationInsights.Common
         /// </summary>
         /// <param name="eventName">The name of the event.</param>
         /// <param name="data">Optional data to attach to the event.</param>
-        void TrackCustomEvent(string eventName, object data = null);
+        /// <param name="metrics">Optional numeric metrics to attach to the event.</param>
+        void TrackCustomEvent(string eventName, object data = null, IDictionary<string, double> metrics = null);
 
         /// <summary>
         /// Track a custom event into Application Insights.
@@ -37,7 +38,8 @@ namespace Carnegie.ApplicationInsights.Common
         /// </summary>
         /// <param name="eventName">The name of the event.</param>
         /// <param name="properties">Name-value pairs with custom data to attach to the event.</param>
-        void TrackCustomEvent(string eventName, IDictionary<string, string> properties);
+        /// <param name="metrics">Optional numeric metrics to attach to the event.</param>
+        void TrackCustomEvent(string eventName, IDictionary<string, string> properties, IDictionary<string, double> metrics = null);
     }
 
     public class MonitoringHelper : IMonitoringHelper
@@ -75,14 +77,15 @@ namespace Carnegie.ApplicationInsights.Common
         /// </summary>
         /// <param name="eventName">The name of the event.</param>
         /// <param name="data">Optional data to attach to the event.</param>
-        public void TrackCustomEvent(string eventName, object data = null)
+        /// <param name="metrics">Optional numeric metrics to attach to the event.</param>
+        public void TrackCustomEvent(string eventName, object data = null, IDictionary<string, double> metrics = null)
         {
             var props = data?
                 .GetType()
                 .GetProperties()
             .ToDictionary(p => p.Name, p => string.Format(CultureInfo.InvariantCulture, "{0}", p.GetValue(data)));
 
-            _telemetryClient?.TrackEvent(eventName, props);
+            _telemetryClient?.TrackEvent(eventName, props, metrics);
         }
 
 
@@ -94,9 +97,10 @@ namespace Carnegie.ApplicationInsights.Common
         /// </summary>
         /// <param name="eventName">The name of the event.</param>
         /// <param name="properties">Name-value pairs with custom data to attach to the event.</param>
-        public void TrackCustomEvent(string eventName, IDictionary<string,string> properties)
+        /// <param name="metrics">Optional numeric metrics to attach to the event.</param>
+        public void TrackCustomEvent(string eventName, IDictionary<string,string> properties, IDictionary<string, double> metrics = null)
         {
-            _telemetryClient?.TrackEvent(eventName, properties);
+            _telemetryClient?.TrackEvent(eventName, properties, metrics);
         }
     }
 }
