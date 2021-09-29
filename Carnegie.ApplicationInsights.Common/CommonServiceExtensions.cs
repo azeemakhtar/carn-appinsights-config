@@ -18,5 +18,18 @@ namespace Carnegie.ApplicationInsights.Common
             services.AddSingleton<ITelemetryInitializer>(new ApplicationRoleTelemetryInitializer(roleName));
             return services;
         }
+
+        /// <summary>
+        /// Clones tags from Activity.Current.Tags into the request context.
+        /// Example usage:
+        ///     System.Diagnostics.Activity.Current.AddTag("AccountNo", 123);
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
+        public static IServiceCollection EnableActivityTags(this IServiceCollection services)
+        {
+            services.AddSingleton<ITelemetryInitializer>(new ActivityTagsTelemetryInitializer());
+            return services;
+        }
     }
 }
