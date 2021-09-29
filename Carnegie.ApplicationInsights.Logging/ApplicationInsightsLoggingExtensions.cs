@@ -17,7 +17,8 @@ namespace Carnegie.ApplicationInsights.Logging
         /// <param name="writeTo"></param>
         /// <param name="instrumentationKey">The instrumentation key to write the events to. If null, then <paramref name="environmentName"/> should be set instead.</param>
         /// <param name="environmentName">The environment to use for instrumentation key lookup.</param>
-        public static LoggerConfiguration ApplicationInsightsSink(this LoggerSinkConfiguration writeTo, string instrumentationKey = null, string environmentName = null)
+        /// <param name="roleName">Overrides the role name. The default is the assembly name.</param>
+        public static LoggerConfiguration ApplicationInsightsSink(this LoggerSinkConfiguration writeTo, string instrumentationKey = null, string environmentName = null, string roleName = null)
         {
             var key = instrumentationKey
                       ?? (environmentName != null
@@ -29,7 +30,7 @@ namespace Carnegie.ApplicationInsights.Logging
 
             var telemetryConfiguration = TelemetryConfiguration.CreateDefault();
             telemetryConfiguration.InstrumentationKey = key;
-            telemetryConfiguration.TelemetryInitializers.Add(new ApplicationRoleTelemetryInitializer());
+            telemetryConfiguration.TelemetryInitializers.Add(new ApplicationRoleTelemetryInitializer(roleName));
 
             return writeTo.ApplicationInsights(telemetryConfiguration, TelemetryConverter.Traces);
         }
