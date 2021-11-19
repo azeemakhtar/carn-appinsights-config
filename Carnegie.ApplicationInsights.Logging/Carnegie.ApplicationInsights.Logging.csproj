@@ -6,7 +6,6 @@
     <Description>Serilog sink for Application Insights.</Description>
     <Company>Carnegie</Company>
     <Authors>Carnegie</Authors>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
