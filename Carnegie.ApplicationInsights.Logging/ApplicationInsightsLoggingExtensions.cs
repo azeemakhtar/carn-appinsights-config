@@ -19,8 +19,8 @@ namespace Carnegie.ApplicationInsights.Logging
         /// <param name="instrumentationKey">The instrumentation key to write the events to. If null, then <paramref name="environmentName"/> should be set instead.</param>
         /// <param name="environmentName">The environment to use for instrumentation key lookup.</param>
         /// <param name="roleName">Overrides the role name. The default is the assembly name.</param>
-        /// <param name="logLevel">Overrides the minimum log event level required in order to write an event to the sink. The default is verbose.</param>
-        public static LoggerConfiguration ApplicationInsightsSink(this LoggerSinkConfiguration writeTo, string instrumentationKey = null, string environmentName = null, string roleName = null, LogEventLevel logLevel = LevelAlias.Minimum)
+        /// <param name="logLevel">Overrides the minimum log event level required in order to write an event to the sink. The default is information.</param>
+        public static LoggerConfiguration ApplicationInsightsSink(this LoggerSinkConfiguration writeTo, string instrumentationKey = null, string environmentName = null, string roleName = null, LogEventLevel logLevel = LogEventLevel.Information)
         {
             var key = instrumentationKey
                       ?? (environmentName != null
