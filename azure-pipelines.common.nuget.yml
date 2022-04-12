@@ -6,40 +6,35 @@ trigger:
     include:
       - Carnegie.ApplicationInsights.Common/*
 
+resources:
+  repositories:
+  - repository: templates
+    name: azdo-pipeline-templates
+    type: git 
+    ref: master
+    
 variables:
-  projectFolder: 'Carnegie.ApplicationInsights.Common'
-  project: '$(projectFolder)/**.csproj'
+  projectFolder: 'Carnegie.ApplicationInsights.Common*'
+  project: '$(projectFolder)/*.csproj'
+  testProjects: '$(projectFolder)/*.Tests.csproj'
   buildConfiguration: 'Release'
 
-pool: 'tfssetup'
+pool: 'Default'
 
 steps:
-- task: DotNetCoreCLI@2
-  displayName: 'Nuget restore...'
-  inputs:
-    command: 'restore'
+- template: steps/dotnetcore/sonarqube-prepare.yml@templates
+  parameters:
+    sonarProjectName: 'Carnegie.ApplicationInsights'
+    sonarProjectKey: 'CarnegieIT_Carnegie.ApplicationInsights'
+
+- template: steps/dotnetcore/build-and-test.yml@templates
+  parameters:
     projects: '$(project)'
-    feedsToUse: 'select'
-    vstsFeed: 'd2ddfc16-5988-4c23-966e-3127e0b2d886'
+    testProjects: '$(testProjects)'
+    buildConfiguration: '$(buildConfiguration)'
 
-- task: DotNetCoreCLI@2
-  displayName: 'Build...'
-  inputs:
-    command: 'build'
+- template: steps/dotnetcore/sonarqube-analyze.yml@templates
+
+- template: steps/dotnetcore/publish-nuget.yml@templates
+  parameters:
     projects: '$(project)'
-    arguments: '-c $(buildConfiguration)'
-
-- task: DotNetCoreCLI@2
-  displayName: 'Pack...'
-  inputs:
-    command: 'pack'
-    packagesToPack: '$(project)'
-    versioningScheme: 'off'
-
-- task: DotNetCoreCLI@2
-  displayName: 'Nuget push...'
-  inputs:
-    command: 'push'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
-    nuGetFeedType: 'internal'
-    publishVstsFeed: '/d2ddfc16-5988-4c23-966e-3127e0b2d886'

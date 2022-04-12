@@ -47,6 +47,7 @@ namespace Carnegie.ApplicationInsights.AspNetCore
                 .AddSingleton<ITelemetryInitializer, AuthenticatedUserIdTelemetryInitializer>()
                 .AddSingleton<ITelemetryInitializer, SoapActionHeaderTelemetryInitializer>()
                 .AddApplicationInsightsTelemetryProcessor<SeqLogFilterProcessor>()
+                .AddApplicationInsightsTelemetryProcessor<SecretsLogFilterProcessor>()
                 .EnableSqlLogging()
                 .EnableApplicationRoles(roleName)
                 .AddSingleton<IMonitoringHelper, MonitoringHelper>();
