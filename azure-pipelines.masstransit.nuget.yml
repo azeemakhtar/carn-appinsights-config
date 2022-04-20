@@ -15,28 +15,27 @@ variables:
   projectFolder: 'Carnegie.ApplicationInsights.MassTransit'
   project: '$(projectFolder)/**.csproj'
   buildConfiguration: 'Release'
+  suffix: $[replace(variables['build.sourcebranchname'], '_', '-')]
   ${{ if ne( variables['Build.SourceBranchName'], 'master') }}: 
-    label: -$(Build.SourceBranchName) 
+    label: -$(suffix) 
   ${{ if eq( variables['Build.SourceBranchName'], 'master') }}: 
     label: ''
 
 pool: 'tfssetup'
 
+
 steps:
-- powershell: |
-      $src = Resolve-Path "$(project)"
-      $xml=[xml](get-content $src)
-      $semanticVersion = "1.0.$(Build.BuildId)$(label)"
-      $versionNode = $xml.SelectSingleNode("/Project/PropertyGroup/Version")
-      if($versionNode) {
-          $version = $versionNode.InnerText
-          $majorMinor = $version.Substring(0, $version.lastIndexOf('.'))
-          $semanticVersion = "$majorMinor.$(Build.BuildId)$(label)"
-          $versionNode.InnerText = $semanticVersion
-          $xml.Save($src)
-      }
-      Write-Host "##vso[build.updatebuildnumber]$semanticVersion"
-  displayName: 'Set version and build number'
+
+- template: steps/dotnetcore/semantic-versioning.yml@templates
+  parameters:
+    projectName: 'Carnegie.ApplicationInsights.MassTransit'
+    label: $(label)
+
+- task: UseDotNet@2
+  displayName: 'Use dotnet 6.x'
+  inputs:
+    packageType: 'sdk'
+    version: '6.x'
 
 - task: DotNetCoreCLI@2
   displayName: 'Restore...'
