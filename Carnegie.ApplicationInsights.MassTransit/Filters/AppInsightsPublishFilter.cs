@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using GreenPipes;
 using MassTransit;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.DataContracts;
