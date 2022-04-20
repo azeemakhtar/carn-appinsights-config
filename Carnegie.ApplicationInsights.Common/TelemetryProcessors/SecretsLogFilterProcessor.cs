@@ -11,10 +11,10 @@ namespace Carnegie.ApplicationInsights.Common.TelemetryProcessors
     public class SecretsLogFilterProcessor : ITelemetryProcessor
     {
         private readonly ITelemetryProcessor _next;
-        private const string _carnegieJWT = "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNyc2Etc2hhMjU2Iiwia2lkIjoiNDEyODlDMUU0NTg0MUU0NjkwMzNCQTNFRjBGQzkzMEIyRTcwNTg2OCIsInR5cCI6IkpXVCJ9.";
-        private const string __regexClientSecret = "(?<=client_secret=)[0-9a-zA-Z]*";
-        private const string __regexSSN = "(?<=subject-)\\d{12}";
-        private const string __regexAccessToken = "(?<=ey)[\\w-]+\\.[\\w-]+\\.[\\w-]+";
+        private const string _carnegieJWT = "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNyc2Etc2hhMjU2Iiwia2lkIjoi";
+        private const string _regexClientSecret = "(?<=client_secret=)[0-9a-zA-Z]*";
+        private const string _regexSSN = "(?<=subject-)\\d{12}";
+        private const string _regexAccessToken = "(?<=ey)[\\w-]+\\.[\\w-]+\\.[\\w-]+";
 
         public SecretsLogFilterProcessor(ITelemetryProcessor next)
         {
@@ -36,14 +36,14 @@ namespace Carnegie.ApplicationInsights.Common.TelemetryProcessors
                 if (dependency.Data == null)
                     return;
                 
-                if (dependency.Data.Contains("Bearer") || dependency.Data.Contains(_carnegieJWT))
-                    dependency.Data = Regex.Replace(dependency.Data, __regexAccessToken, "***");
+                if (ContainsJWT(dependency.Data))
+                    dependency.Data = Regex.Replace(dependency.Data, _regexAccessToken, "***");
 
                 if (dependency.Data.Contains("client_secret="))
-                    dependency.Data = Regex.Replace(dependency.Data, __regexClientSecret, "***");                   
+                    dependency.Data = Regex.Replace(dependency.Data, _regexClientSecret, "***");                   
                 
                 if (dependency.Data.Contains("login_hint=subject-"))
-                    dependency.Data = Regex.Replace(dependency.Data, __regexSSN, "***");
+                    dependency.Data = Regex.Replace(dependency.Data, _regexSSN, "***");
             }
             else if (item is RequestTelemetry request)
             {
@@ -52,9 +52,14 @@ namespace Carnegie.ApplicationInsights.Common.TelemetryProcessors
 
                 string requestUrl = request.Url.ToString();
 
-                if (requestUrl.Contains("Bearer") || requestUrl.Contains(_carnegieJWT))
-                    request.Url = new Uri(Regex.Replace(requestUrl, __regexAccessToken, "***"));
+                if (ContainsJWT(requestUrl))
+                    request.Url = new Uri(Regex.Replace(requestUrl, _regexAccessToken, "***"));
             }
+        }
+
+        private bool ContainsJWT(string input)
+        {
+            return input.Contains("Bearer") || input.Contains("access_token=") || input.Contains(_carnegieJWT);
         }
     }
 }
