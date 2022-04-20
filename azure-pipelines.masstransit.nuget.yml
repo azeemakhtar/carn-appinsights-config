@@ -11,6 +11,13 @@ trigger:
       # Variables not supported here (https://docs.microsoft.com/en-us/azure/devops/pipelines/repos/azure-repos-git?view=azure-devops&tabs=yaml#paths)
       - Carnegie.ApplicationInsights.MassTransit/*
 
+resources:
+  repositories:
+  - repository: templates
+    name: azdo-pipeline-templates
+    type: git 
+    ref: master
+
 variables:
   projectFolder: 'Carnegie.ApplicationInsights.MassTransit'
   project: '$(projectFolder)/**.csproj'
