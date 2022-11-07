@@ -23,6 +23,8 @@ namespace Carnegie.ApplicationInsights.Common
             {
                 case "DEVELOPMENT":
                     return EmptyKey();
+                case "DEV":
+                    return "38071731-db32-4095-b2ae-f92ed690cf32";
                 case "TEST":
                     return "2c0b4ed7-0011-444d-97b6-3206a5da2953";
                 case "TEST1":
