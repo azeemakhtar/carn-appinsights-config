@@ -15,8 +15,10 @@ namespace Carnegie.ApplicationInsights.MassTransit
 		{
 			serviceBusOptions.UseConsumeFilter(typeof(AppInsightsConsumeFilter<>));
 			serviceBusOptions.UsePublishFilter(typeof(AppInsightsPublishFilter<>));
+			serviceBusOptions.UseSendFilter(typeof(AppInsightsPublishFilter<>));
+            
 
-			return serviceBusOptions;
+            return serviceBusOptions;
 		}
 	}
 }
