@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!--Fix for avoiding CVE warnings in Mend CVE-2021-26701 and CVE-2021-24112-->
+    <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
+    <PackageReference Include="System.Text.Encodings.Web" Version="7.0.0" />
+    <!-- END CVE warnings in Mend-->
     <PackageReference Include="Microsoft.ApplicationInsights.WorkerService" Version="2.21.0" />
   </ItemGroup>
 
