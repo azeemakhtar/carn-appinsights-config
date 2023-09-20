@@ -3,14 +3,14 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<LangVersion>latest</LangVersion>
-		<Version>1.4.0</Version>
+		<Version>1.5.0</Version>
 		<Description>Contains Application Insight addons for masstransit</Description>
 		<Company>Carnegie</Company>
 		<Authors>Carnegie</Authors>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Carnegie.ServiceBus.AspNetCore" Version="2.4.25612" />
+		<PackageReference Include="Carnegie.ServiceBus.AspNetCore" Version="2.5.58409" />
 		<PackageReference Include="Microsoft.ApplicationInsights" Version="2.21.0" />
 	</ItemGroup>
 
