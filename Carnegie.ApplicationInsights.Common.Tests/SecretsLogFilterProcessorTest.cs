@@ -14,11 +14,13 @@ namespace CarnegieApplicationInsightsCommonTests
         const string _bearerTestURL = "https://mytest.se/index.html?access_token=eyJhbGciOiJodHRwOi8ck3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNyc2Etc2hhMjU2Iiwia2lkIjoiNDEyODlDMUU0NTg0MUU0NjkwMzNCQTNFRjBGQzkzMEIyRTcwNTg2OCIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1ZjUwYWEwZC1hOGFkLTQ4ZjYtODg0Yi00NTg5ZjFhZTRmZGIiLCJ0eXAiOiJKV1QiLCJzdWIiOiI5YzVhMWVjYS1iN2Y5LTQ4ZGMtOGYyZS04ZDMwZGMyZWQ4ZDUiLCJhcHBpZCI6IkZpUHJvIiwidW5pcXVlX25hbWUiOiJ6YWluYWIuYW1lci1hZ3JlbkBjYXJuZWdpZS5zZSIsImZpcnN0bmFtZSI6IlphaW5hYiIsImxhc3RuYW1lIjoiQW1lci3DhWdyZW4iLCJkaXNwbGF5bmFtZSI6IlphaW5hYiBBbWVyLcOFZ3JlbiIsImVtYWlsIjoiemFpbmFiLmFtZXItYWdyZW5AY2FybmVnaWUuc2UiLCJkZXBhcnRtZW50IjoiU0UgVHJlYXN1cnkgJiBDcmVkaXQiLCJidXNpbmVzc19hcmVhIjoiYzZjYzBhYjEtMzk1MS00ZmZjLWE3ZDctZWQzNzg2ZGYyM2UzIiwiY291bnRyeSI6IlN3ZWRlbiIsIndtVXNlcklkIjoiNzU5Iiwicm9sZXMiOlsiZW1wbG95ZWUiLCJmaXByby1hZG1pbiJdLCJuYmYiOjE2NDc5MzQ3NTEsImV4cCI6MTY0Nzk3Nzk1MSwiaXNzIjoiYXV0aC5jYXJuZWdpZS5zZSJ9.A6EiPQMvGxFRqOve5gex3Mw7hh6wXCQ2Z9UpOGy-C_pSFLvV_lLsbOSCIE9FTJO-sLf33CIiMCLen2d4e9wIts571w_YA8qVUcbJ2adn76BMhoLbImI9uzUSXIh3ogmAzBgD16AtlUEJQGSnkZyxeTzTydVs6ZyRq8HG_Ar0k1V_xJN8Sgqv26PaN0JJwvyMZECXl_6lLWzMREOSCSpY9v2ZxN9sgrSTMjN-mK99cvT_KbKO0VGi5hM7QTaTkuaM0LYfiVEW8Qs1mlZ5aIrz7egXAYycuoQqctT264ReCqEqi1wgjyAOaIeOXNfgUlW9z224GEV0cYH7M_hvT_WtIA&token_type=Bearer&expires_in=43200";
         const string _ssnTestURL = "https://mytest.se/oidc/authorize?response_type=code&scope=openid+profile+signicat.national_id&client_id=prod.carnegie.se&client_secret=b5YNKXFhZq9PP3ZRnUReE1wh09GK4nYSkerGBewRQb4&redirect_uri=https://login-mytest.se&acr_values=urn:signicat:oidc:method:sbid-inapp-oidc&state=0.8984038630102927&login_hint=subject-194810335453";
         const string _internalTokenTestURL = "https://mytest-service.se/advisory?id=J00-pxmBkk-NjYYeX-SMQg&access_token=eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNyc2Etc2hhMjU2Iiwia2lkIjoiNDEyODlDMUU0NTg0MUU0NjkwMzNCQTNFRjBGQzkzMEIyRTcwNTg2OCIsInR5cCI6IkpXVCJ9.eyJqdGkiOOllMGVkNTgzMi02OGUxLTRmOTktOGM0ZS01NjliMDU1Nzk3ZDAiLCJ0eXAiOiJKV1QiLCJzdWIiOiIyNDA3NTE1Ni1iMmEyLTQxMDEtYWNiZi00ZWRlN2ZkOTIxZGQiLCJhcHBpZCI6IlBhbmRhLXByb2QiLCJ1bmlxdWVfbmFtZSI6ImFuZHJlYXMuZmxlbW1lckBjYXJuZWdpZS5zZSIsImZpcnN0bmFtZSI6IkFuZHJlYXMiLCJsYXN0bmFtZSI6IkZsZW1tZXIiLCJkaXNwbGF5bmFtZSI6IkFuZHJlYXMgRmxlbW1lciIsImVtYWlsIjoiYW5kcmVhcy5mbGVtbWVyQGNhcm5lZ2llLnNlIiwiZGVwYXJ0bWVudCI6IlNFIFBCIEFzc2V0IE1nbW50IiwiYnVzaW5lc3NfYXJlYSI6ImQxNmExZDYyLWQ4YzUtNDcxOS05OGM4LTU1MmQ5NGYxYTE5MiIsImNvdW50cnkiOiJTd2VkZW4iLCJ3bVVzZXJJZCI6IjEzNDciLCJyb2xlcyI6ImVtcGxveWVlIiwibmJmIjoxNjQ4NDU2NDkwLCJleHAiOjE3IDg0OTk2OTAsImlzcyI6ImF1dGguY2FybmVnaWUuc2UifQ.oX8M1rGvCzyb0lcfMDS27rOblMiJ-X6R7N7LvABqiAxlVcK8LN3tYQCFcrhkSOw9Nq_lNFspwB3lIkWQlZFXjEAfcrFn6p8dAkzkPEqhy3_bm0Dav985XdsGuF9Vp1c3cwjcHTK7t-D4XKPJvrn6cXQXK6ypi4FPRRXey1Y33g4OMjXXOxkMeL1-EoE_JHW_yaQmSg0qvfQJ8i9zkoYwhI6CSmXv-8DSmIWu7S7n594rBHID7Af7KabiPt6MSovll07UfmyEN4Vx5Bm90vMQ2AtgOYJvarrmaXGPJukjfthyxD6KYpUXNI-iJzP5bnRDMXCivxz3ave0QGp1re87Fw";
+        const string _subjectTestURL = "http://mytest.se/claims/?subject=200101012425";
         const string _carnegieJWT = "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNyc2Etc2hhMjU2Iiwia2lkIjoi";
 
         private readonly string _regexAccessToken = "(?<=ey)[\\w-]+\\.[\\w-]+\\.[\\w-]+";
         private readonly string _regexClientSecret = "(?<=client_secret=)[0-9a-zA-Z]*";
         private readonly string _regexSSN = "(?<=subject-)\\d{12}";
+        private readonly string _regexSubject = "(?<=subject=)[0-9a-zA-Z]*";
 
         [Fact]
         public void DependencyTelemetry_exception_should_be_null()
@@ -182,6 +184,15 @@ namespace CarnegieApplicationInsightsCommonTests
             var testMatch = Regex.IsMatch(text, _regexSSN);
 
             Assert.False(testMatch);
+        }
+
+        [Theory]
+        [InlineData("subject=4290478733")]        
+        public void Subject_Should_be_found(string text)
+        {
+            var testMatch = Regex.IsMatch(text, _regexSubject);
+
+            Assert.True(testMatch);
         }
 
         [Theory]

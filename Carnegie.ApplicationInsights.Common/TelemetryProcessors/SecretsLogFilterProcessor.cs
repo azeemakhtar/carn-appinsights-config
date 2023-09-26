@@ -15,6 +15,7 @@ namespace Carnegie.ApplicationInsights.Common.TelemetryProcessors
         private const string _regexClientSecret = "(?<=client_secret=)[0-9a-zA-Z]*";
         private const string _regexSSN = "(?<=subject-)\\d{12}";
         private const string _regexAccessToken = "(?<=ey)[\\w-]+\\.[\\w-]+\\.[\\w-]+";
+        private const string _regexSubject = "(?<=subject=)[0-9a-zA-Z]*";
 
         public SecretsLogFilterProcessor(ITelemetryProcessor next)
         {
@@ -44,6 +45,9 @@ namespace Carnegie.ApplicationInsights.Common.TelemetryProcessors
                 
                 if (dependency.Data.Contains("login_hint=subject-"))
                     dependency.Data = Regex.Replace(dependency.Data, _regexSSN, "***");
+
+                if (dependency.Data.Contains("?subject="))
+                    dependency.Data = Regex.Replace(dependency.Data, _regexSubject, "***");
             }
             else if (item is RequestTelemetry request)
             {

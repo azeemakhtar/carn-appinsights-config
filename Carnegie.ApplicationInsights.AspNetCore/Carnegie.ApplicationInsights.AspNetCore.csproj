@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <Version>1.22.1</Version>
+    <Version>1.22.2</Version>
     <projectUrl>https://dev.azure.com/carnegieinvestmentbank/CarnegieIT/_git/Carnegie.ApplicationInsights</projectUrl>
     <description> Helpers for enabling and configuring Application Insights for services and other Asp .Net Core projects.</description>
     <releaseNotes>Fix for avoiding CVE warnings in Mend CVE-2021-26701 and CVE-2021-24112. Hard reference to nuget System.Drawing.Common and System.Text.Encodings.Web version  7.0.0</releaseNotes>
