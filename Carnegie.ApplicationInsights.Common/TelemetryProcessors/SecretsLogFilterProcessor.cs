@@ -58,7 +58,15 @@ namespace Carnegie.ApplicationInsights.Common.TelemetryProcessors
 
                 if (ContainsJWT(requestUrl))
                     request.Url = new Uri(Regex.Replace(requestUrl, _regexAccessToken, "***"));
+
+                if(ContainsSubjectParameter(requestUrl))
+                    request.Url = new Uri(Regex.Replace(requestUrl, _regexSubject, "***"));
             }
+        }
+
+        private bool ContainsSubjectParameter(string input)
+        {
+            return input.Contains("?subject=") || input.Contains("&subject=");
         }
 
         private bool ContainsJWT(string input)
