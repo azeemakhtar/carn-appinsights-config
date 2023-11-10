@@ -19,10 +19,11 @@ namespace Carnegie.ApplicationInsights.AspNetCore
         /// <param name="environmentName"></param>
         /// <param name="adaptiveSampling"></param>
         /// <param name="roleName">Overrides the role name. The default is the assembly name.</param>
+        /// <param name="endpointAddress">Overrides the original Application Insights endpoint. Useful in restricted environments</param>
         /// <returns>The applied instrumentation key, or null if not enabled.</returns>
         public static string AddCarnegieApplicationInsightsAspNetCore(this IServiceCollection services,
             string instrumentationKey = null, string environmentName = null, bool adaptiveSampling = false,
-            string roleName = null)
+            string roleName = null, string endpointAddress = null)
         {
             if (string.IsNullOrEmpty(instrumentationKey) && string.IsNullOrEmpty(environmentName))
             {
@@ -42,7 +43,8 @@ namespace Carnegie.ApplicationInsights.AspNetCore
                     new ApplicationInsightsServiceOptions
                     {
                         InstrumentationKey = key,
-                        EnableAdaptiveSampling = adaptiveSampling
+                        EnableAdaptiveSampling = adaptiveSampling,
+                        EndpointAddress = endpointAddress
                     })
                 .AddSingleton<ITelemetryInitializer, AuthenticatedUserIdTelemetryInitializer>()
                 .AddSingleton<ITelemetryInitializer, SoapActionHeaderTelemetryInitializer>()
